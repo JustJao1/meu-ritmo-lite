@@ -1,0 +1,14 @@
+.env*
+.dev.vars*
+node_modules/
+.DS_Store
+*.pem
+.wrangler/
+.sites-runtime/
+
+android/.gradle/
+android/local.properties
+android/**/build/
+android/app/src/main/assets/site/
+*.keystore
+*.jks
