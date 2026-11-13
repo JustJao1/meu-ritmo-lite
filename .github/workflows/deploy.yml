@@ -1,5 +1,7 @@
 name: Publicar Meu Ritmo Lite
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
