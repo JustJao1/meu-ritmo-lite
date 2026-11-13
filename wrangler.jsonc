@@ -1,0 +1,8 @@
+{
+  "name": "meu-ritmo-lite",
+  "compatibility_date": "2026-05-15",
+  "assets": {
+    "directory": "./dist"
+  },
+  "workers_dev": true
+}
