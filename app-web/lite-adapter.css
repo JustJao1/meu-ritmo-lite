@@ -21,3 +21,20 @@ body{font-family:'DM Sans',sans-serif;line-height:1.5}.brandmark>span{position:s
 .brandmark{font-family:Georgia,serif;font-size:25px;width:33px;height:34px;flex-shrink:0;display:block;line-height:25px;background:#e9785d;border-radius:50% 50% 40% 40%;position:relative;text-align:center;padding-top:1px;letter-spacing:-4px;padding-right:5px;transform:rotate(-9deg);color:#2b302b}.brandmark>span{font-style:italic}.brandname{font-family:Manrope,'DM Sans',sans-serif;font-weight:750;letter-spacing:-1px;white-space:nowrap}.brandregistered{font:8px Arial,sans-serif;align-self:flex-start;line-height:1;margin-top:8px;margin-left:-5px}.brand .litebadge{font:600 8px 'DM Sans',sans-serif;letter-spacing:1px;padding:3px 5px;background:#e9eddf;border-radius:3px;color:#2b302b}.brand{display:inline-flex;gap:9px;align-items:center;white-space:nowrap}
 
 .sidebar .brand{font-size:20px;gap:6px}.sidebar .brand .litebadge{margin-left:0}.sidebar .brandregistered{margin-left:-3px}.mobilebrand{display:none}@media(max-width:760px){.topbar{gap:8px;padding-left:18px;padding-right:18px}.topbar .areabreadcrumb{display:none}.topbar .mobilebrand{display:inline-flex;font-size:19px;gap:6px}.mobilebrand .brandmark{width:29px;height:30px;font-size:23px;line-height:23px}.mobilebrand .brandregistered{font-size:6px;margin-top:6px}.mobilebrand .litebadge{font-size:6px;padding:3px}.topactions{gap:4px}.topactions .iconbtn{min-width:30px;padding:5px}}
+
+/* Temas locais do Meu Ritmo Lite. O original permanece inalterado. */
+#lite-theme-select{display:block;width:100%;margin-top:8px;max-width:360px}
+html[data-lite-theme="azul"]{--paper:#edf5fc;--ink:#243b57;--muted:#576d84;--line:#c8d9e8;--coral:#4f88bf;--blue:#2768a6;--green:#dcebf8;--yellow:#e4eff9}
+html[data-lite-theme="azul"] body{background:var(--paper);color:var(--ink)}
+html[data-lite-theme="azul"] .sidebar,html[data-lite-theme="azul"] .topbar,html[data-lite-theme="azul"] .sidebottom{background:#e5f0fa}
+html[data-lite-theme="azul"] .navitem.active,html[data-lite-theme="azul"] .dayhero{background:#d6e8f8}
+html[data-lite-theme="escuro"]{color-scheme:dark;--paper:#171e28;--ink:#edf2fa;--muted:#b4bfd0;--line:#3a4657;--coral:#f39a7f;--blue:#9ac4ff;--green:#26394b;--yellow:#3a4354}
+html[data-lite-theme="escuro"] body,html[data-lite-theme="escuro"] .appbody,html[data-lite-theme="escuro"] .content{background:#171e28;color:#edf2fa}
+html[data-lite-theme="escuro"] .sidebar,html[data-lite-theme="escuro"] .topbar,html[data-lite-theme="escuro"] .sidebottom,html[data-lite-theme="escuro"] .footer{background:#202b39;color:#edf2fa;border-color:#3a4657}
+html[data-lite-theme="escuro"] .navitem,html[data-lite-theme="escuro"] .sideutility,html[data-lite-theme="escuro"] .areabreadcrumb{color:#c9d5e4}
+html[data-lite-theme="escuro"] .navitem.active,html[data-lite-theme="escuro"] .navitem:hover,html[data-lite-theme="escuro"] .dayhero{background:#30445a;color:#edf2fa}
+html[data-lite-theme="escuro"] :is(.card,.panel,.privacycard,.settingsrows>div,.modalcard,.statcard,.taskrow,.calendar,.note-card,.expense-card,.routine-card,.empty-state,.notice,.widget){background:#263446;color:#edf2fa;border-color:#43536a}
+html[data-lite-theme="escuro"] :is(input,select,textarea,dialog){background:#273548;color:#f2f5fc;border-color:#53657a}
+html[data-lite-theme="escuro"] :is(.secondary,.smallbutton,.iconbtn,.iconbutton){background:#2b3a4e;color:#edf2fa;border-color:#52647a}
+html[data-lite-theme="escuro"] :is(.primary,.ink){background:#496a8d;color:#fff}
+html[data-lite-theme="escuro"] :is(p,small,.formhint,.eyebrow){color:inherit}
