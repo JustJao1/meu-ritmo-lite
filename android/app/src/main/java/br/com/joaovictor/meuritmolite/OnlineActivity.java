@@ -4,7 +4,7 @@ import android.app.*;import android.content.*;import android.graphics.Color;impo
 public final class OnlineActivity extends Activity {
  private WebView web;private UpdateGate gate;private LinearLayout root;
  @Override public void onCreate(Bundle state){super.onCreate(state);
-  gate=new UpdateGate(this);gate.check();
+  gate=new UpdateGate(this);
   web=new WebView(this);web.setBackgroundColor(Color.rgb(250,249,245));
   WebSettings settings=web.getSettings();settings.setJavaScriptEnabled(true);settings.setDomStorageEnabled(true);
   settings.setAllowFileAccess(false);settings.setAllowContentAccess(false);settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
@@ -25,7 +25,7 @@ public final class OnlineActivity extends Activity {
   TextView title=new TextView(this);title.setText("MR: Meu Ritmo App");title.setTextSize(16);title.setTextColor(Color.rgb(35,40,38));bar.addView(title,new LinearLayout.LayoutParams(0,-2,1));
   Button alarms=new Button(this);alarms.setText("Alarmes");alarms.setAllCaps(false);alarms.setOnClickListener(v->startActivity(new Intent(this,MainActivity.class)));bar.addView(alarms);
   Button reload=new Button(this);reload.setText("Recarregar");reload.setAllCaps(false);reload.setOnClickListener(v->web.reload());bar.addView(reload);root.addView(bar,new LinearLayout.LayoutParams(-1,-2));root.addView(web,new LinearLayout.LayoutParams(-1,0,1));
-  setContentView(root);web.loadUrl("https://meuritmo.net/app");
+  setContentView(root);gate.protect();gate.check();web.loadUrl("https://meuritmo.net/app");
  }
  @Override protected void onResume(){super.onResume();if(gate!=null)gate.check();}
  @Override public void onBackPressed(){if(web!=null&&web.canGoBack())web.goBack();else super.onBackPressed();}
