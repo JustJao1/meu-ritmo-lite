@@ -7,6 +7,11 @@ const THEME_URL='https://meuritmo.net/api/appearance-sync';
 function applyAppearance(t){
  if(!t||!/^#[0-9a-f]{6}$/i.test(t.paper||'')||!/^#[0-9a-f]{6}$/i.test(t.ink||'')||!/^#[0-9a-f]{6}$/i.test(t.side||'')||!/^#[0-9a-f]{6}$/i.test(t.banner||'')||!/^#[0-9a-f]{6}$/i.test(t.accent||''))return false;
  const root=document.documentElement;
+ const rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(v=>v<=0.04045?v/12.92:((v+0.055)/1.055)**2.4);
+ const lum=h=>rgb(h).reduce((sum,v,i)=>sum+v*[0.2126,0.7152,0.0722][i],0);
+ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+0.05)/(Math.min(x,y)+0.05)};
+ const accentText=contrast(t.accent,t.ink)>=contrast(t.accent,t.paper)?t.ink:t.paper;
+ root.style.setProperty('--accent-text',accentText);
  root.dataset.liteTheme='linked';
  const values={'--paper':t.paper,'--ink':t.ink,'--muted':'color-mix(in srgb, '+t.ink+' 76%, '+t.paper+')','--line':'color-mix(in srgb, '+t.ink+' 18%, '+t.paper+')','--coral':t.accent,'--blue':t.accent,'--yellow':t.banner,'--accent':t.accent,'--green':t.banner,'--theme-banner':t.banner,'--theme-side':t.side};
  for(const [name,value]of Object.entries(values))root.style.setProperty(name,value);
