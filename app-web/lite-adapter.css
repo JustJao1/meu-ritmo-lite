@@ -29,12 +29,12 @@ html[data-lite-theme="linked"] .content{background:var(--paper);color:var(--ink)
 html[data-lite-theme="linked"] :is(.sidebar,.topbar,.sidebottom,.footer,.bottomnav){background:var(--theme-side);color:var(--ink);border-color:var(--line)}
 html[data-lite-theme="linked"] :is(.daybanner,.dayhero,.budgetsummary,.channelnotice,.financesummary,.navitem.active,.sidebar nav>a.active,.sidebar nav>a:hover){background:var(--theme-banner);color:var(--ink)}
 html[data-lite-theme="linked"] :is(.navitem,.sideutility,.areabreadcrumb,.topbar #saved,.pageheading p,.pageheading .eyebrow,.tasktitle small,.budgetbalance,.sectionheading>a){color:var(--ink)}
-html[data-lite-theme="linked"] :is(.primary,.mobilefab,.toggle.on){background:var(--accent);border-color:var(--accent);color:var(--paper)}
+html[data-lite-theme="linked"] :is(.primary,.mobilefab,.toggle.on){background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
 html[data-lite-theme="linked"] :is(.card,.panel,.privacycard,.settingsrows>div,.modalcard,.statcard,.taskrow,.calendar,.note-card,.expense-card,.routine-card,.empty-state,.notice,.widget,.financebox,#dialog){background:var(--paper);color:var(--ink);border-color:var(--line)}
 html[data-lite-theme="linked"] :is(input,select,textarea,.searchfield,#dialog input,#dialog select,#dialog textarea){background:var(--paper);color:var(--ink);border-color:var(--line)}
 html[data-lite-theme="linked"] :is(.secondary,.smallbutton,.iconbtn,.iconbutton,.typebutton){background:var(--theme-side);color:var(--ink);border-color:var(--line)}
 html[data-lite-theme="linked"] .brand .litebadge{background:var(--theme-banner);color:var(--ink)}
-html[data-lite-theme="linked"] .brandmark{background:var(--accent);color:var(--paper)}
+html[data-lite-theme="linked"] .brandmark{background:var(--accent);color:var(--accent-text)}
 html[data-lite-theme="linked"] .sidebar nav>a[href='#gastos']:has(.navdot){color:var(--ink)}
 html[data-lite-theme="linked"] .sidebar nav>a[href='#gastos']>.navdot{background:var(--accent)}
 html[data-lite-theme="linked"] .budgettrack{background:var(--theme-side)}
@@ -46,3 +46,8 @@ html[data-lite-dark="true"] :is(.note.notecard,.note.paper,.note.pink,.financesu
 html[data-lite-dark="true"] :is(.note .notetext p,.notesgrid .note .notecontent p,.notehead,.note footer,.note.notecard .notebottom,.note.notecard .notebottom>span,.daybanner p,.channelnotice p){color:var(--ink)}
 html[data-lite-dark="true"] :is(.routinedays .active,.routinedays .active span){background:var(--theme-banner);color:var(--ink)}
 html[data-lite-dark="true"] .bottomnav{background:var(--theme-side)}
+
+html[data-lite-theme="linked"] :is(.primary:hover,.mobilefab:hover,.brandmark:hover){color:var(--accent-text)}
+html[data-lite-theme="linked"] :is(.navitem:not(.active):hover,.sideutility:hover,.iconbtn:hover,.textbutton:hover){background:var(--theme-banner);color:var(--ink)}
+html[data-lite-theme="linked"] :is(.muted,.formhint,.privacycard p,.settingsrows p,.liteidentity small,.developercredit){color:var(--muted)}
+html[data-lite-theme="linked"] :is(button,a,input,textarea,select):focus-visible{outline-color:var(--accent)}
