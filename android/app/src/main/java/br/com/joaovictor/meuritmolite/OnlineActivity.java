@@ -9,8 +9,10 @@ public final class OnlineActivity extends Activity {
   WebSettings settings=web.getSettings();settings.setJavaScriptEnabled(true);settings.setDomStorageEnabled(true);
   settings.setAllowFileAccess(false);settings.setAllowContentAccess(false);settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
   settings.setSafeBrowsingEnabled(true);settings.setSupportMultipleWindows(false);
-  CookieManager.getInstance().setAcceptCookie(true);
+  CookieManager.getInstance().setAcceptCookie(true);CookieManager.getInstance().setAcceptThirdPartyCookies(web,false);
   web.setWebViewClient(new WebViewClient(){
+   @Override public void onReceivedError(WebView view,WebResourceRequest req,WebResourceError error){if(req.isForMainFrame())Toast.makeText(OnlineActivity.this,"Sem conexão com o Meu Ritmo. Verifique sua internet e tente novamente.",Toast.LENGTH_LONG).show();}
+
    @Override public boolean shouldOverrideUrlLoading(WebView view,WebResourceRequest request){
     Uri uri=request.getUrl();String host=uri.getHost();
     if("https".equals(uri.getScheme())&&("meuritmo.net".equals(host)||"www.meuritmo.net".equals(host)))return false;
@@ -22,7 +24,7 @@ public final class OnlineActivity extends Activity {
   LinearLayout bar=new LinearLayout(this);bar.setPadding(12,8,12,8);bar.setGravity(Gravity.CENTER_VERTICAL);
   TextView title=new TextView(this);title.setText("MR: Meu Ritmo App");title.setTextSize(16);title.setTextColor(Color.rgb(35,40,38));bar.addView(title,new LinearLayout.LayoutParams(0,-2,1));
   Button alarms=new Button(this);alarms.setText("Alarmes");alarms.setAllCaps(false);alarms.setOnClickListener(v->startActivity(new Intent(this,MainActivity.class)));bar.addView(alarms);
-  root.addView(bar,new LinearLayout.LayoutParams(-1,-2));root.addView(web,new LinearLayout.LayoutParams(-1,0,1));
+  Button reload=new Button(this);reload.setText("Recarregar");reload.setAllCaps(false);reload.setOnClickListener(v->web.reload());bar.addView(reload);root.addView(bar,new LinearLayout.LayoutParams(-1,-2));root.addView(web,new LinearLayout.LayoutParams(-1,0,1));
   setContentView(root);web.loadUrl("https://meuritmo.net/app");
  }
  @Override protected void onResume(){super.onResume();if(gate!=null)gate.check();}
