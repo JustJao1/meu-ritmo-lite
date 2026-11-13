@@ -3,3 +3,21 @@
 .brandmark{font-family:Georgia,serif;font-size:25px;width:33px;height:34px;flex-shrink:0;display:block;line-height:25px;background:#e9785d;border-radius:50% 50% 40% 40%;position:relative;text-align:center;padding-top:1px;letter-spacing:-4px;padding-right:5px;transform:rotate(-9deg);color:#2b302b}.brandmark>span{font-style:italic}.brandname{font-family:Manrope,'DM Sans',sans-serif;font-weight:750;letter-spacing:-1px;white-space:nowrap}.brandregistered{font:8px Arial,sans-serif;align-self:flex-start;line-height:1;margin-top:8px;margin-left:-5px}.brand .litebadge{font:600 8px 'DM Sans',sans-serif;letter-spacing:1px;padding:3px 5px;background:#e9eddf;border-radius:3px;color:#2b302b}.brand{display:inline-flex;gap:9px;align-items:center;white-space:nowrap}
 
 @media(max-width:760px){header .brand{font-size:22px;gap:7px}header>a:last-child{max-width:95px;font-size:11px}.brand .litebadge{font-size:7px}}
+
+/* Installation choices: two platforms, clear actions, comfortable mobile reading. */
+.platforms{max-width:1180px;margin:0 auto;padding:50px 32px 75px;border-top:1px solid var(--line)}
+.platformintro{max-width:650px;margin-bottom:28px}.platformintro h2{font-size:clamp(29px,3.5vw,45px);line-height:1.12;letter-spacing:-.045em;margin:12px 0}.platformintro>p:last-child{color:var(--muted);margin:0}
+.platformgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.platformcard{padding:clamp(24px,3vw,38px);background:#fffefa;border:1px solid var(--line);border-radius:10px;min-width:0}
+.platformtag{display:inline-block;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.12em}
+.platformcard h3{font-size:clamp(23px,2.7vw,31px);line-height:1.2;letter-spacing:-.04em;margin:14px 0}
+.platformcard p{font-size:14px;color:var(--muted);line-height:1.65}
+.platformbutton{display:inline-flex;align-items:center;justify-content:space-between;gap:18px;min-height:48px;margin:14px 0 12px;padding:12px 18px;background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:7px;font-size:13px;font-weight:700;text-decoration:none}
+.platformbutton:hover{background:#414a42}
+.platformcard small{display:block;font-size:11px;line-height:1.6;color:var(--muted)}
+.platformhelp{display:block;margin:8px 0 0;padding:9px 0;background:none;border:0;color:var(--ink);font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:4px;text-align:left}
+#iphone-steps{margin-top:15px;padding:16px 19px;background:#f4f3ed;border:1px solid var(--line);border-radius:7px}
+#iphone-steps ol{padding-left:19px;margin:0 0 14px}
+#iphone-steps li{font-size:13px;margin-bottom:10px;line-height:1.6}
+#iphone-steps p{font-size:12px;margin:0;line-height:1.65}
+@media(max-width:760px){.platforms{padding:40px 20px 58px}.platformgrid{grid-template-columns:1fr;gap:14px}.platformcard{padding:24px 21px}.platformbutton{width:100%}}
