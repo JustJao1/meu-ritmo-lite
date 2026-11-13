@@ -33,11 +33,8 @@ public final class OnlineActivity extends Activity {
    }
   });
   root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);
-  LinearLayout bar=new LinearLayout(this);bar.setPadding(12,8,12,8);bar.setGravity(Gravity.CENTER_VERTICAL);
-  TextView title=new TextView(this);title.setText("MR: Meu Ritmo App");title.setTextSize(16);title.setTextColor(Color.rgb(35,40,38));bar.addView(title,new LinearLayout.LayoutParams(0,-2,1));
-  Button alarms=new Button(this);alarms.setText("Alarmes");alarms.setAllCaps(false);alarms.setOnClickListener(v->startActivity(new Intent(this,MainActivity.class)));bar.addView(alarms);
-  Button reload=new Button(this);reload.setText("Recarregar");reload.setAllCaps(false);reload.setOnClickListener(v->web.reload());bar.addView(reload);root.addView(bar,new LinearLayout.LayoutParams(-1,-2));root.addView(web,new LinearLayout.LayoutParams(-1,0,1));
-  setContentView(root);gate.protect();gate.check();web.loadUrl("https://meuritmo.net/app");
+  root.addView(web,new LinearLayout.LayoutParams(-1,0,1));
+  setContentView(root);gate.protect();gate.check();web.loadUrl("https://meuritmo.net/app?source=android-app");
  }
  @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] results){
   super.onRequestPermissionsResult(request,permissions,results);
