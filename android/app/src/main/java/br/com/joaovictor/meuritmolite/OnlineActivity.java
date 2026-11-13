@@ -36,6 +36,8 @@ public final class OnlineActivity extends Activity {
   root.addView(web,new LinearLayout.LayoutParams(-1,0,1));
   setContentView(root);gate.protect();gate.check();web.loadUrl("https://meuritmo.net/app?source=android-app");
  }
+ @Override public boolean onCreateOptionsMenu(Menu menu){menu.add(0,1,0,"Alarmes do aparelho");menu.add(0,2,1,"Atualizar");return true;}
+ @Override public boolean onOptionsItemSelected(MenuItem item){if(item.getItemId()==1){startActivity(new Intent(this,MainActivity.class));return true;}if(item.getItemId()==2){web.reload();return true;}return super.onOptionsItemSelected(item);}
  @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] results){
   super.onRequestPermissionsResult(request,permissions,results);
   if(request==LOCATION_REQUEST&&geoCallback!=null){
