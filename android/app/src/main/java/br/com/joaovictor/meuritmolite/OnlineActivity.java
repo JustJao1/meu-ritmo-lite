@@ -8,7 +8,7 @@ public final class OnlineActivity extends Activity {
   web=new WebView(this);web.setBackgroundColor(Color.rgb(250,249,245));
   WebSettings settings=web.getSettings();settings.setJavaScriptEnabled(true);settings.setDomStorageEnabled(true);
   settings.setAllowFileAccess(false);settings.setAllowContentAccess(false);settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-  settings.setSafeBrowsingEnabled(true);settings.setSupportMultipleWindows(false);
+  settings.setSafeBrowsingEnabled(true);settings.setSupportMultipleWindows(false);settings.setJavaScriptCanOpenWindowsAutomatically(false);
   CookieManager.getInstance().setAcceptCookie(true);CookieManager.getInstance().setAcceptThirdPartyCookies(web,false);
   web.setWebViewClient(new WebViewClient(){
    @Override public void onReceivedError(WebView view,WebResourceRequest req,WebResourceError error){if(req.isForMainFrame())Toast.makeText(OnlineActivity.this,"Sem conexão com o Meu Ritmo. Verifique sua internet e tente novamente.",Toast.LENGTH_LONG).show();}
