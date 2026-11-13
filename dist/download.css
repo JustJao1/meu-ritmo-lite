@@ -41,3 +41,7 @@ h2,h3{font-weight:750;letter-spacing:-.042em}
 .installaction{gap:12px}
 @media(max-width:600px){.brand{font-size:15px;gap:6px}.appbadge{font-size:8px;padding:3px 5px;margin-left:1px}.headerlinks .headeraction{padding:10px 11px;font-size:11px}.hero-lead{font-size:16px}h1{font-size:clamp(46px,11vw,65px)}.primary{min-height:49px}}
 @media(prefers-reduced-motion:reduce){.primary,.headerlinks .headeraction,.platformhelp,.secondary{transition:none}}
+
+/* Canonical brand mark: identical to the browser-tab artwork. */
+.brandmark.brandmark-icon{display:block;flex:0 0 auto;width:34px;height:34px;max-width:34px;object-fit:contain;padding:0;margin:0;background:transparent!important;border:0;border-radius:0;transform:none;line-height:normal;letter-spacing:normal}
+@media(max-width:600px){.brandmark.brandmark-icon{width:30px;height:30px;max-width:30px}}
