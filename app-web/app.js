@@ -8,7 +8,7 @@ function applyAppearance(t){
  if(!t||!/^#[0-9a-f]{6}$/i.test(t.paper||'')||!/^#[0-9a-f]{6}$/i.test(t.ink||'')||!/^#[0-9a-f]{6}$/i.test(t.side||'')||!/^#[0-9a-f]{6}$/i.test(t.banner||'')||!/^#[0-9a-f]{6}$/i.test(t.accent||''))return false;
  const root=document.documentElement;
  root.dataset.liteTheme='linked';
- const values={'--paper':t.paper,'--ink':t.ink,'--muted':t.ink,'--line':t.side,'--coral':t.accent,'--accent':t.accent,'--green':t.banner,'--theme-banner':t.banner,'--theme-side':t.side};
+ const values={'--paper':t.paper,'--ink':t.ink,'--muted':'color-mix(in srgb, '+t.ink+' 76%, '+t.paper+')','--line':'color-mix(in srgb, '+t.ink+' 18%, '+t.paper+')','--coral':t.accent,'--blue':t.accent,'--yellow':t.banner,'--accent':t.accent,'--green':t.banner,'--theme-banner':t.banner,'--theme-side':t.side};
  for(const [name,value]of Object.entries(values))root.style.setProperty(name,value);
  const dark=parseInt(t.paper.slice(1,3),16)<80&&parseInt(t.paper.slice(3,5),16)<80;
  root.dataset.liteDark=dark?'true':'false';
@@ -28,6 +28,8 @@ async function refreshAppearance(){
 }
 refreshAppearance();
 setInterval(refreshAppearance,15*60*1000);
+window.addEventListener('online',refreshAppearance);
+window.addEventListener('focus',refreshAppearance);
 const icon=(name,size=20)=>`<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${(iconNodes[name]||iconNodes.note).map(([tag,attrs])=>`<${tag} ${Object.entries(attrs).filter(([k])=>k!=='key').map(([k,v])=>`${k}="${esc(v)}"`).join(' ')} />`).join('')}</svg>`;
 const areas=[['hoje','Hoje','sun'],['agenda','Agenda','calendar'],['rotina','Rotina','routine'],['gastos','Gastos','wallet'],['notas','Notas','note'],['lembretes','Lembretes','bell'],['recados','Recados','message'],['alarmes','Alarmes','alarm']];
 const types={task:['Tarefa','routine'],event:['Compromisso','calendar'],expense:['Gasto','wallet'],note:['Anotação','note'],reminder:['Lembrete','bell'],message:['Recado','message'],alarm:['Alarme','alarm']};
