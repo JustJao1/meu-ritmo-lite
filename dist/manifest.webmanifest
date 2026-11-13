@@ -1,0 +1,25 @@
+{
+  "name": "Mr: Meu Ritmo",
+  "short_name": "Mr: Meu Ritmo",
+  "description": "Meu Ritmo para Android e iPhone",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#101114",
+  "theme_color": "#101114",
+  "icons": [
+    {
+      "src": "/favicon-mr-v3.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-mr-v3.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
