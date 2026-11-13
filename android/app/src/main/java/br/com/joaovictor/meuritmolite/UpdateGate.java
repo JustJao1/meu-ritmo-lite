@@ -14,12 +14,12 @@ public final class UpdateGate {
    JSONObject v=new JSONObject(bytes.toString("UTF-8"));int min=v.getInt("minSupportedVersionCode");String url=v.getString("apkUrl");String message=v.optString("message","Atualize para continuar usando o aplicativo.");
    if(!url.startsWith("https://"))throw new IOException("Invalid download URL");
    handler.post(()->{checking=false;verified=true;if(min>installedVersion()){required=true;downloadUrl=url;show(message);}else{required=false;if(dialog!=null&&dialog.isShowing())dialog.dismiss();schedule();}});
-  }catch(Exception e){handler.post(()->{checking=false;if(required)show("Atualização obrigatória. Conecte-se à internet para atualizar.");else{required=true;show("Não foi possível verificar a versão do aplicativo. Conecte-se à internet e tente novamente.");handler.postDelayed(this::check,30000);}});}
+  }catch(Exception e){handler.post(()->{checking=false;required=true;show("Não foi possível verificar a versão do aplicativo. Conecte-se à internet e tente novamente.");handler.postDelayed(this::check,30000);});}
  }).start();}
  private void schedule(){handler.removeCallbacksAndMessages(null);handler.postDelayed(this::check,INTERVAL);}
  private void show(String message){if(activity.isFinishing()||(dialog!=null&&dialog.isShowing()))return;
   dialog=new AlertDialog.Builder(activity).setTitle("Atualização obrigatória").setMessage(message)
-  .setCancelable(false).setPositiveButton("Atualizar agora",(d,w)->{try{activity.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(downloadUrl)));}catch(Exception ignored){}handler.postDelayed(()->show(message),500);}).create();
+  .setCancelable(false).setPositiveButton(downloadUrl.isEmpty()?"Tentar novamente":"Atualizar agora",(d,w)->{if(downloadUrl.isEmpty()){check();}else try{activity.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(downloadUrl)));}catch(Exception ignored){}handler.postDelayed(()->show(message),500);}).create();
   dialog.setCanceledOnTouchOutside(false);dialog.show();}
  private long installedVersion(){try{android.content.pm.PackageInfo p=activity.getPackageManager().getPackageInfo(activity.getPackageName(),0);return android.os.Build.VERSION.SDK_INT>=28?p.getLongVersionCode():p.versionCode;}catch(Exception e){return 0;}}
  public boolean isRequired(){return required||!verified;}
