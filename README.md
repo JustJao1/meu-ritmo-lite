@@ -1,4 +1,4 @@
-# Meu Ritmo Lite
+# Mr: Meu Ritmo App
 
 Aplicativo Android offline, sem login, planos ou comunidade. Desenvolvido por João Victor.
 
