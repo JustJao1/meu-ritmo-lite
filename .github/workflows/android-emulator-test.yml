@@ -1,0 +1,56 @@
+name: Testar APK em emulador Android
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Preparar Android SDK
+        run: |
+          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-36' 'build-tools;36.0.0'
+      - name: Compilar APK e validar código
+        working-directory: android
+        run: gradle --no-daemon lintDebug testDebugUnitTest assembleDebug
+      - name: Instalar e abrir APK em emulador Android
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          target: google_apis
+          disable-animations: true
+          script: |
+            set -e
+            adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+            adb shell am start -W -n br.com.joaovictor.meuritmolite/.OnlineActivity
+            sleep 15
+            adb shell pidof br.com.joaovictor.meuritmolite
+            adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity|mCurrentFocus' || true
+            adb logcat -d -v brief > android-emulator-logcat.txt
+            if grep -E 'FATAL EXCEPTION:|Process: br.com.joaovictor.meuritmolite' android-emulator-logcat.txt; then
+              echo 'Foi encontrado possível crash no logcat'
+              exit 1
+            fi
+            adb shell screencap -p /sdcard/mr-smoke.png
+            adb pull /sdcard/mr-smoke.png android-emulator-screenshot.png
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: diagnostico-emulador-android
+          path: |
+            android-emulator-logcat.txt
+            android-emulator-screenshot.png
+          if-no-files-found: ignore
+          retention-days: 7
