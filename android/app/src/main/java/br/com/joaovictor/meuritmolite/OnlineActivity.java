@@ -1,8 +1,8 @@
 package br.com.joaovictor.meuritmolite;
-import android.app.*;import android.content.*;import android.graphics.Color;import android.net.Uri;import android.os.Bundle;import android.webkit.*;import android.view.*;import android.widget.*;
+import android.Manifest;import android.content.pm.PackageManager;import android.app.*;import android.content.*;import android.graphics.Color;import android.net.Uri;import android.os.Bundle;import android.webkit.*;import android.view.*;import android.widget.*;
 /** Online account, plans, community and weather. Native offline alarms remain in MainActivity. */
 public final class OnlineActivity extends Activity {
- private WebView web;private UpdateGate gate;private LinearLayout root;
+ private WebView web;private UpdateGate gate;private LinearLayout root;private GeolocationPermissions.Callback geoCallback;private String geoOrigin;private static final int LOCATION_REQUEST=204;
  @Override public void onCreate(Bundle state){super.onCreate(state);
   gate=new UpdateGate(this);
   web=new WebView(this);web.setBackgroundColor(Color.rgb(250,249,245));
@@ -10,6 +10,18 @@ public final class OnlineActivity extends Activity {
   settings.setAllowFileAccess(false);settings.setAllowContentAccess(false);settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
   settings.setSafeBrowsingEnabled(true);settings.setSupportMultipleWindows(false);settings.setJavaScriptCanOpenWindowsAutomatically(false);
   CookieManager.getInstance().setAcceptCookie(true);CookieManager.getInstance().setAcceptThirdPartyCookies(web,false);
+  web.setWebChromeClient(new WebChromeClient(){
+   @Override public void onGeolocationPermissionsShowPrompt(String origin,GeolocationPermissions.Callback callback){
+    Uri uri=Uri.parse(origin);
+    if(!"https".equals(uri.getScheme())||!("meuritmo.net".equals(uri.getHost())||"www.meuritmo.net".equals(uri.getHost()))){callback.invoke(origin,false,false);return;}
+    if(android.os.Build.VERSION.SDK_INT>=23&&checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+     if(geoCallback!=null)geoCallback.invoke(geoOrigin,false,false);
+     geoCallback=callback;geoOrigin=origin;
+     requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},LOCATION_REQUEST);
+    }else callback.invoke(origin,true,false);
+   }
+   @Override public void onGeolocationPermissionsHidePrompt(){ }
+  });
   web.setWebViewClient(new WebViewClient(){
    @Override public void onReceivedError(WebView view,WebResourceRequest req,WebResourceError error){if(req.isForMainFrame())Toast.makeText(OnlineActivity.this,"Sem conexão com o Meu Ritmo. Verifique sua internet e tente novamente.",Toast.LENGTH_LONG).show();}
 
@@ -27,7 +39,14 @@ public final class OnlineActivity extends Activity {
   Button reload=new Button(this);reload.setText("Recarregar");reload.setAllCaps(false);reload.setOnClickListener(v->web.reload());bar.addView(reload);root.addView(bar,new LinearLayout.LayoutParams(-1,-2));root.addView(web,new LinearLayout.LayoutParams(-1,0,1));
   setContentView(root);gate.protect();gate.check();web.loadUrl("https://meuritmo.net/app");
  }
+ @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] results){
+  super.onRequestPermissionsResult(request,permissions,results);
+  if(request==LOCATION_REQUEST&&geoCallback!=null){
+   geoCallback.invoke(geoOrigin,results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED,false);
+   geoCallback=null;geoOrigin=null;
+  }
+ }
  @Override protected void onResume(){super.onResume();if(gate!=null)gate.check();}
  @Override public void onBackPressed(){if(web!=null&&web.canGoBack())web.goBack();else super.onBackPressed();}
- @Override protected void onDestroy(){if(gate!=null)gate.stop();if(web!=null){web.destroy();web=null;}super.onDestroy();}
+ @Override protected void onDestroy(){if(gate!=null)gate.stop();if(geoCallback!=null){geoCallback.invoke(geoOrigin,false,false);geoCallback=null;}if(web!=null){web.destroy();web=null;}super.onDestroy();}
 }
