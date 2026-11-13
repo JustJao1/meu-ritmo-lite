@@ -14,7 +14,7 @@ public final class UpdateGate {
    JSONObject v=new JSONObject(bytes.toString("UTF-8"));int min=v.getInt("minSupportedVersionCode");String url=v.getString("apkUrl");String message=v.optString("message","Atualize para continuar usando o aplicativo.");
    if(!url.startsWith("https://"))throw new IOException("Invalid download URL");
    handler.post(()->{checking=false;verified=true;if(min>installedVersion()){required=true;downloadUrl=url;show(message);}else{required=false;if(dialog!=null&&dialog.isShowing())dialog.dismiss();schedule();}});
-  }catch(Exception e){handler.post(()->{checking=false;if(required)show("Atualização obrigatória. Conecte-se à internet para atualizar.");else{required=true;show("Não foi possível verificar a versão do aplicativo. Conecte-se à internet e tente novamente.");}});}
+  }catch(Exception e){handler.post(()->{checking=false;if(required)show("Atualização obrigatória. Conecte-se à internet para atualizar.");else{required=true;show("Não foi possível verificar a versão do aplicativo. Conecte-se à internet e tente novamente.");handler.postDelayed(this::check,30000);}});}
  }).start();}
  private void schedule(){handler.removeCallbacksAndMessages(null);handler.postDelayed(this::check,INTERVAL);}
  private void show(String message){if(activity.isFinishing()||(dialog!=null&&dialog.isShowing()))return;
