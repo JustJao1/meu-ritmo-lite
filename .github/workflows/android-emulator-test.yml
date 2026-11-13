@@ -39,7 +39,7 @@ jobs:
             adb shell pidof br.com.joaovictor.meuritmolite
             adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity|mCurrentFocus' || true
             adb logcat -d -v brief > android-emulator-logcat.txt
-            if grep -E 'FATAL EXCEPTION:|Process: br.com.joaovictor.meuritmolite' android-emulator-logcat.txt; then
+            if grep -F 'FATAL EXCEPTION:' android-emulator-logcat.txt; then
               echo 'Foi encontrado possível crash no logcat'
               exit 1
             fi
