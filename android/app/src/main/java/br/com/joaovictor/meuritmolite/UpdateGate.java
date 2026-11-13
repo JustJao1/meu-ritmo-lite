@@ -13,7 +13,7 @@ public final class UpdateGate {
    ByteArrayOutputStream bytes=new ByteArrayOutputStream();try(InputStream in=c.getInputStream()){byte[] b=new byte[4096];int n;while((n=in.read(b))!=-1){bytes.write(b,0,n);if(bytes.size()>16384)throw new IOException("Policy too large");}}
    JSONObject v=new JSONObject(bytes.toString("UTF-8"));int min=v.getInt("minSupportedVersionCode");String url=v.getString("apkUrl");String message=v.optString("message","Atualize para continuar usando o aplicativo.");
    if(!url.startsWith("https://"))throw new IOException("Invalid download URL");
-   handler.post(()->{checking=false;if(min>BuildConfig.VERSION_CODE){required=true;downloadUrl=url;show(message);}else if(!required){schedule();}});
+   handler.post(()->{checking=false;if(min>installedVersion()){required=true;downloadUrl=url;show(message);}else if(!required){schedule();}});
   }catch(Exception e){handler.post(()->{checking=false;if(required)show("Atualização obrigatória. Conecte-se à internet para atualizar.");else schedule();});}
  }).start();}
  private void schedule(){handler.removeCallbacksAndMessages(null);handler.postDelayed(this::check,INTERVAL);}
@@ -21,6 +21,7 @@ public final class UpdateGate {
   dialog=new AlertDialog.Builder(activity).setTitle("Atualização obrigatória").setMessage(message)
   .setCancelable(false).setPositiveButton("Atualizar agora",(d,w)->{try{activity.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(downloadUrl)));}catch(Exception ignored){}handler.postDelayed(()->show(message),500);}).create();
   dialog.setCanceledOnTouchOutside(false);dialog.show();}
+ private long installedVersion(){try{android.content.pm.PackageInfo p=activity.getPackageManager().getPackageInfo(activity.getPackageName(),0);return android.os.Build.VERSION.SDK_INT>=28?p.getLongVersionCode():p.versionCode;}catch(Exception e){return 0;}}
  public boolean isRequired(){return required;}
  public void stop(){handler.removeCallbacksAndMessages(null);if(dialog!=null)dialog.dismiss();}
 }
